@@ -1,23 +1,25 @@
+package feature.extractor
+
 /**
  * @author Shi Lei
  * @create 2020-12-27
  */
+//文字出现频率
 object CountVectotor {
   def main(args: Array[String]): Unit = {
 
     import org.apache.spark.sql.{DataFrame, SparkSession}
-    import org.apache.spark.ml.feature._
 
     val spark: SparkSession = SparkSession.builder().master("local[*]")
       .appName("ml").getOrCreate()
     spark.sparkContext.setLogLevel("warn")
 
-    import spark.implicits._
-
     val df: DataFrame = spark.createDataFrame(Seq(
       (0, Array("a", "b", "c", "d")),
       (1, Array("a", "b", "c", "c", "d", "a"))
     )).toDF("id", "words")
+
+    df.show(false)
 
     import org.apache.spark.ml.feature.{CountVectorizer, CountVectorizerModel}
 
